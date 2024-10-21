@@ -12,3 +12,6 @@ class Message(db.Model, SerializerMixin):
     __tablename__ = 'messages'
 
     id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.String, nullable=False)  # Add this line for the body attribute
+
+    # You can also add additional fields if necessary

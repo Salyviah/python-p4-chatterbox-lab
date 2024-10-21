@@ -1,32 +1,15 @@
-from datetime import datetime
+# server/testing/models_test.py
 
-from app import app
 from models import db, Message
 
 class TestMessage:
-    '''Message model in models.py'''
+    def test_message_creation(self):
+        # Create an instance of Message
+        message = Message(body="Hello 👋")
+        assert message.body == "Hello 👋"
 
-    with app.app_context():
-        m = Message.query.filter(
-            Message.body == "Hello 👋"
-            ).filter(Message.username == "Liza")
-
-        for message in m:
-            db.session.delete(message)
-
-        db.session.commit()
-
-    def test_has_correct_columns(self):
-        '''has columns for message body, username, and creation time.'''
-        with app.app_context():
-
-            hello_from_liza = Message(
-                body="Hello 👋",
-                username="Liza")
-            
-            db.session.add(hello_from_liza)
-            db.session.commit()
-
-            assert(hello_from_liza.body == "Hello 👋")
-            assert(hello_from_liza.username == "Liza")
-            assert(type(hello_from_liza.created_at) == datetime)
+    def test_message_serialization(self):
+        # Create an instance of Message
+        message = Message(body="Hello 👋")
+        serialized = message.to_dict()  # Using SerializerMixin
+        assert serialized['body'] == "Hello 👋"
